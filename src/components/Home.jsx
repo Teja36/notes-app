@@ -54,7 +54,7 @@ export default function Home() {
               component="p"
               sx={{ textAlign: "center", flexGrow: 1, color: "#9e9e9e" }}
             >
-              Add a new note.
+              Start adding your notes here.
             </Typography>
           )}
         </Grid>

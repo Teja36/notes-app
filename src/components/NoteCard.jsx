@@ -25,9 +25,9 @@ export default function NoteCard({ id, title, desc, notify }) {
         <Typography variant="body2">{desc}</Typography>
       </CardContent>
       <CardActions>
-        <Button color="primary" startIcon={<EditIcon />}>
+        {/* <Button color="primary" startIcon={<EditIcon />}>
           Edit
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           startIcon={<DeleteIcon />}
