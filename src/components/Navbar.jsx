@@ -12,7 +12,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("uid");
     localStorage.removeItem("email");
-    navigate("/login");
+    navigate("/");
   };
   return (
     <AppBar position="sticky" sx={{ mb: 5 }}>
