@@ -7,6 +7,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 
 import { getAuth } from "@firebase/auth";
@@ -39,6 +40,21 @@ export const updateNote = async (id, title, desc) => {
 
 export const deleteNote = async (id) => {
   await deleteDoc(doc(db, "notes", id));
+};
+
+export const displayNotes = (uid) => {
+  const notes = [{}];
+  const q = query(collection(db, "notes"), where("userId", "==", uid));
+  onSnapshot(q, (querySnapshot) => {
+    querySnapshot.forEach((docx) => {
+      notes.push({
+        id: docx.id,
+        title: docx.data().title,
+        desc: docx.data().description,
+      });
+    });
+  });
+  return notes;
 };
 
 export const db = getFirestore(app);
