@@ -4,6 +4,8 @@ import {
   getFirestore,
   collection,
   doc,
+  query,
+  where,
   addDoc,
   updateDoc,
   deleteDoc,
