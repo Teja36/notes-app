@@ -8,7 +8,7 @@ import NoteCard from "./NoteCard";
 import AddNote from "./AddNote";
 
 export default function Home() {
-  const [notes, setNotes] = useState([{}]);
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     getNotes();
