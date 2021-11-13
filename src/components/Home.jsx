@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import { db } from "../firebase";
-import { collection, where, query, getDocs } from "firebase/firestore";
+import { collection, where, query, onSnapshot } from "firebase/firestore";
 
 import Navbar from "./Navbar";
 import NoteCard from "./NoteCard";
@@ -10,25 +10,20 @@ import AddNote from "./AddNote";
 export default function Home() {
   const [notes, setNotes] = useState([]);
 
-  useEffect(() => {
-    getNotes();
-  }, []);
-
   const uid = localStorage.getItem("uid");
+  const q = query(collection(db, "notes"), where("userId", "==", uid));
 
-  const getNotes = async () => {
-    const q = query(collection(db, "notes"), where("userId", "==", uid));
-    const querySnapshot = await getDocs(q);
-    const tempDoc = querySnapshot.docs.map((doc) => {
-      return {
-        id: doc.id,
-        title: doc.data().title,
-        desc: doc.data().description,
-      };
+  useEffect(() => {
+    onSnapshot(q, (snapshot) => {
+      setNotes(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          title: doc.data().title,
+          desc: doc.data().description,
+        }))
+      );
     });
-    console.log(tempDoc);
-    setNotes(tempDoc);
-  };
+  }, []);
 
   return (
     <>
@@ -39,12 +34,7 @@ export default function Home() {
             notes.map((data) => {
               return (
                 <Grid item md={4} sm={6} xs={12} key={data.id}>
-                  <NoteCard
-                    id={data.id}
-                    title={data.title}
-                    desc={data.desc}
-                    notify={getNotes}
-                  />
+                  <NoteCard id={data.id} title={data.title} desc={data.desc} />
                 </Grid>
               );
             })
@@ -58,7 +48,7 @@ export default function Home() {
             </Typography>
           )}
         </Grid>
-        <AddNote notify={getNotes} />
+        <AddNote />
       </Container>
     </>
   );

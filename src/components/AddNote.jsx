@@ -12,7 +12,7 @@ import {
 
 import AddIcon from "@mui/icons-material/Add";
 
-export default function FormDialog({ notify }) {
+export default function FormDialog() {
   const [open, setOpen] = useState(false);
   const titleRef = useRef(null);
   const descRef = useRef(null);
@@ -30,8 +30,6 @@ export default function FormDialog({ notify }) {
     const desc = descRef.current.value;
 
     if (uid) addNotes(uid, title, desc);
-
-    notify();
 
     handleClose();
   };

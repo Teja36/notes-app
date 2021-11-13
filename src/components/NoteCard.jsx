@@ -12,10 +12,9 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function NoteCard({ id, title, desc, notify }) {
+export default function NoteCard({ id, title, desc }) {
   const handleDelete = () => {
     deleteNote(id);
-    notify();
   };
 
   return (
