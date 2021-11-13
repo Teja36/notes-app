@@ -25,9 +25,12 @@ export default function FormDialog({ id, title, desc }) {
   };
 
   const handleSubmit = () => {
-    if (values.title) updateNote(id, values.title, values.desc);
-
-    setOpen(false);
+    if (values.title) {
+      updateNote(id, values.title, values.desc);
+      setOpen(false);
+    } else {
+      handleClose();
+    }
   };
   return (
     <>
