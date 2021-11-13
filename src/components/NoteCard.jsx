@@ -1,5 +1,6 @@
 import React from "react";
 import { deleteNote } from "../firebase";
+import EditNote from "./EditNote";
 
 import {
   Card,
@@ -9,7 +10,6 @@ import {
   Button,
 } from "@mui/material";
 
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function NoteCard({ id, title, desc }) {
@@ -24,9 +24,7 @@ export default function NoteCard({ id, title, desc }) {
         <Typography variant="body2">{desc}</Typography>
       </CardContent>
       <CardActions>
-        {/* <Button color="primary" startIcon={<EditIcon />}>
-          Edit
-        </Button> */}
+        <EditNote id={id} title={title} desc={desc} />
         <Button
           color="primary"
           startIcon={<DeleteIcon />}

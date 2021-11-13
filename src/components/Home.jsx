@@ -13,7 +13,7 @@ export default function Home() {
   const uid = localStorage.getItem("uid");
   const q = query(collection(db, "notes"), where("userId", "==", uid));
 
-  useEffect(() => {
+  useEffect(() =>
     onSnapshot(q, (snapshot) => {
       setNotes(
         snapshot.docs.map((doc) => ({
@@ -22,8 +22,8 @@ export default function Home() {
           desc: doc.data().description,
         }))
       );
-    });
-  }, []);
+    })
+  );
 
   return (
     <>
