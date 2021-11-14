@@ -15,19 +15,18 @@ export default function Home() {
   const uid = localStorage.getItem("uid");
   const q = query(collection(db, "notes"), where("userId", "==", uid));
 
-  useEffect(
-    () =>
-      onSnapshot(q, (snapshot) => {
-        setNotes(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            title: doc.data().title,
-            desc: doc.data().description,
-          }))
-        );
-      }),
-    []
-  );
+  useEffect(() => {
+    const unsub = onSnapshot(q, (snapshot) => {
+      setNotes(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          title: doc.data().title,
+          desc: doc.data().description,
+        }))
+      );
+    });
+    return () => unsub();
+  }, []);
 
   const darkTheme = createTheme({
     palette: {
@@ -35,11 +34,7 @@ export default function Home() {
     },
   });
 
-  const lightTheme = createTheme({
-    palette: {
-      mode: "light",
-    },
-  });
+  const lightTheme = createTheme({});
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
