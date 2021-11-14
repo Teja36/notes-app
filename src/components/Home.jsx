@@ -25,7 +25,6 @@ export default function Home() {
             desc: doc.data().description,
           }))
         );
-        console.log("snapshot");
       }),
     []
   );

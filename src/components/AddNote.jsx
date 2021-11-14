@@ -29,7 +29,7 @@ export default function FormDialog() {
     const title = titleRef.current.value;
     const desc = descRef.current.value;
 
-    if (uid) addNotes(uid, title, desc);
+    if (title.length && uid) addNotes(uid, title, desc);
 
     handleClose();
   };
