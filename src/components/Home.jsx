@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Paper, Typography } from "@mui/material";
+import { CssBaseline, Container, Grid, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { db } from "../firebase";
 import { collection, where, query, onSnapshot } from "firebase/firestore";
@@ -43,35 +43,30 @@ export default function Home() {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Paper style={{ height: "100vh" }}>
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-        <Container>
-          <Grid container spacing={3}>
-            {notes.length > 0 ? (
-              notes.map((data) => {
-                return (
-                  <Grid item md={4} sm={6} xs={12} key={data.id}>
-                    <NoteCard
-                      id={data.id}
-                      title={data.title}
-                      desc={data.desc}
-                    />
-                  </Grid>
-                );
-              })
-            ) : (
-              <Typography
-                variant="h1"
-                component="p"
-                sx={{ textAlign: "center", flexGrow: 1, color: "#9e9e9e" }}
-              >
-                Start adding your notes here.
-              </Typography>
-            )}
-          </Grid>
-          <AddNote />
-        </Container>
-      </Paper>
+      <CssBaseline />
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Container>
+        <Grid container spacing={3}>
+          {notes.length > 0 ? (
+            notes.map((data) => {
+              return (
+                <Grid item md={4} sm={6} xs={12} key={data.id}>
+                  <NoteCard id={data.id} title={data.title} desc={data.desc} />
+                </Grid>
+              );
+            })
+          ) : (
+            <Typography
+              variant="h1"
+              component="p"
+              sx={{ textAlign: "center", flexGrow: 1, color: "#9e9e9e" }}
+            >
+              Start adding your notes here.
+            </Typography>
+          )}
+        </Grid>
+        <AddNote />
+      </Container>
     </ThemeProvider>
   );
 }
