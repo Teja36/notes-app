@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { CssBaseline, Container, Grid, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { db } from "../firebase";
-import { collection, where, query, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  where,
+  query,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
 
 import Navbar from "./Navbar";
 import NoteCard from "./NoteCard";
@@ -13,7 +19,11 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
 
   const uid = localStorage.getItem("uid");
-  const q = query(collection(db, "notes"), where("userId", "==", uid));
+  const q = query(
+    collection(db, "notes"),
+    where("userId", "==", uid),
+    orderBy("createdAt", "desc")
+  );
 
   useEffect(() => {
     const unsub = onSnapshot(q, (snapshot) => {

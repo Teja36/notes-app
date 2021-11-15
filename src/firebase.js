@@ -7,6 +7,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 import { getAuth } from "@firebase/auth";
@@ -27,6 +28,7 @@ export const addNotes = async (uid, title, desc) => {
     userId: uid,
     title: title,
     description: desc,
+    createdAt: serverTimestamp(),
   });
 };
 
@@ -34,6 +36,7 @@ export const updateNote = async (id, title, desc) => {
   await updateDoc(doc(db, "notes", id), {
     title: title,
     description: desc,
+    createdAt: serverTimestamp(),
   });
 };
 
