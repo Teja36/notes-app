@@ -14,6 +14,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   const titleRef = useRef(null);
   const descRef = useRef(null);
 
@@ -22,6 +23,7 @@ export default function FormDialog() {
   };
   const handleClose = () => {
     setOpen(false);
+    setError("");
   };
 
   const handleSubmit = () => {
@@ -29,9 +31,13 @@ export default function FormDialog() {
     const title = titleRef.current.value;
     const desc = descRef.current.value;
 
-    if (title.length && uid) addNotes(uid, title, desc);
-
-    handleClose();
+    if (title.length && uid) {
+      addNotes(uid, title, desc);
+      handleClose();
+    } else if (!title.length) {
+      setError("Title can't be empty!");
+      titleRef.current.focus();
+    }
   };
   return (
     <>
@@ -53,7 +59,10 @@ export default function FormDialog() {
             inputRef={titleRef}
             variant="standard"
             margin="dense"
+            error={error.length ? true : false}
+            helperText={error}
             fullWidth
+            required
           />
           <TextField
             type="text"

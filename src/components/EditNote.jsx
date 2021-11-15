@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { updateNote } from "../firebase";
 import {
   Button,
@@ -14,6 +14,8 @@ import EditIcon from "@mui/icons-material/Edit";
 export default function FormDialog({ id, title, desc }) {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState({ title, desc });
+  const [error, setError] = useState("");
+  const titleRef = useRef(null);
 
   const handleOpen = () => {
     setOpen(true);
@@ -22,14 +24,17 @@ export default function FormDialog({ id, title, desc }) {
   const handleClose = () => {
     setOpen(false);
     setValues({ title, desc });
+    setError("");
   };
 
   const handleSubmit = () => {
     if (values.title) {
       updateNote(id, values.title, values.desc);
       setOpen(false);
+      setError("");
     } else {
-      handleClose();
+      setError("Title can't be empty!");
+      titleRef.current.focus();
     }
   };
   return (
@@ -50,6 +55,10 @@ export default function FormDialog({ id, title, desc }) {
             }}
             variant="standard"
             margin="dense"
+            inputRef={titleRef}
+            error={error.length ? true : false}
+            helperText={error}
+            required
             fullWidth
           />
           <TextField
